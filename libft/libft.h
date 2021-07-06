@@ -46,6 +46,7 @@ size_t	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 int		ft_putnbr_fd(int n, int fd);
 int		ft_putpnbr_fd(unsigned int n, int fd);
+int		ft_putx_fd(unsigned int n, char c, int fd);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
