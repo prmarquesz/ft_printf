@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 07:08:39 by proberto          #+#    #+#             */
-/*   Updated: 2021/06/03 17:12:01 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/06 13:53:27 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static char	*itoc(char *nbr, int n, int digits);
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
 	char	nbr[13];
 
 	if (n == 0 || (n >= 0 && n <= 9))
-		ft_putchar_fd(n + '0', fd);
+		return (ft_putchar_fd(n + '0', fd));
 	else
-		ft_putstr_fd(itoc(nbr, n, 2), fd);
+		return (ft_putstr_fd(itoc(nbr, n, 2), fd));
 }
 
 static char	*itoc(char *nbr, int n, int digits)
