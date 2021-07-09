@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:37:15 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/06 15:07:19 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/08 22:04:36 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			i = check_type(str[i + 1], &arg, i, &count);
-			if (i == -1)
+			if ((int)i == -1)
 				return (count);
 		}	
 		else
