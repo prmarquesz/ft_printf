@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/16 18:09:00 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/16 20:04:38 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_spec
 	t_data		data;
 }				t_spec;
 
-int	ft_printf(const char *str, ...);
+int		ft_printf(const char *str, ...);
+char	*get_flag(char *str, t_spec *spec);
 
 #endif
