@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/17 02:31:12 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/18 16:16:40 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char	*get_flag(char *str, t_spec *spec);
 char	*get_width(char *str, va_list *arg, t_spec *spec);
 char	*get_precision(char *str, va_list *arg, t_spec *spec);
 char	*get_data_type(char *str, va_list *arg, t_spec *spec);
+void	ft_formatting(t_spec *spec);
 
 #endif
