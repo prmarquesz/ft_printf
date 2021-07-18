@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/18 18:18:11 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/18 20:56:51 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_formatting(t_spec *spec)
 		if (spec->flag.status == ON && spec->flag.token == '0'
 			&& spec->precision.status == ON)
 		{
-			spec->flag.status == OFF;
+			spec->flag.status = OFF;
 			spec->width.fill = ' ';
 		}
 	}
