@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/18 17:23:42 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/18 18:18:11 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,49 @@ void	ft_formatting(t_spec *spec)
 			spec->width.fill = ' ';
 		}
 	}
+}
+
+static unsigned int	intlen(t_spec *spec)
+{
+	unsigned int	digits;
+	int				n;
+
+	n = spec->data.value.value;
+	digits = 0;
+	while (n)
+	{
+		n /= spec->data.base;
+		digits++;
+	}
+	return (digits);
+}
+
+static unsigned int	uintlen(t_spec *spec)
+{
+	unsigned int	digits;
+	unsigned int	n;
+
+	n = spec->data.value.uvalue;
+	digits = 0;
+	while (n)
+	{
+		n /= spec->data.base;
+		digits++;
+	}
+	return (digits);
+}
+
+static unsigned int	ptrlen(t_spec *spec)
+{
+	unsigned int	digits;
+	uintptr_t		n;
+
+	n = spec->data.value.pvalue;
+	digits = 0;
+	while (n)
+	{
+		n /= spec->data.base;
+		digits++;
+	}
+	return (digits);
 }
