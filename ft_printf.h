@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/18 22:51:46 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/19 01:41:07 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ char	*get_data_type(char *str, va_list *arg, t_spec *spec);
 void	ft_formatting(t_spec *spec);
 void	ft_write_char(t_spec *spec, size_t *count);
 void	ft_write_str(t_spec *spec, size_t *count);
+void	ft_write_int(t_spec *spec, size_t *count);
 
 #endif

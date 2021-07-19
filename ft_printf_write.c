@@ -6,11 +6,14 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/18 22:51:41 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:07:24 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void	ft_write_prec(t_spec *spec, size_t *count);
+static void	ft_write_width(t_spec *spec, size_t *count);
 
 void	ft_write_char(t_spec *spec, size_t *count)
 {
@@ -33,7 +36,7 @@ void	ft_write_str(t_spec *spec, size_t *count)
 	if (spec->flag.status == ON && spec->flag.token == '-')
 	{
 		if ((spec->precision.value >= spec->data.length.len)
-			|| spec->precision.status == OFF)
+			|| (spec->precision.status == OFF))
 			*count += ft_putstr_fd(spec->data.value.svalue, 1);
 		else
 		{
@@ -47,7 +50,7 @@ void	ft_write_str(t_spec *spec, size_t *count)
 	while (spec->width.value-- > spec->precision.value)
 		*count += ft_putchar_fd(spec->width.fill, 1);
 	if ((spec->precision.value >= spec->data.length.len)
-		|| spec->precision.status == OFF)
+		|| (spec->precision.status == OFF))
 		*count += ft_putstr_fd(spec->data.value.svalue, 1);
 	else
 	{
@@ -56,6 +59,46 @@ void	ft_write_str(t_spec *spec, size_t *count)
 	}
 }
 
-void	ft_write_int10(t_spec *spec, size_t *count);
-void	ft_write_int16(t_spec *spec, size_t *count);
-void	ft_write_ptr(t_spec *spec, size_t *count);
+void	ft_write_int(t_spec *spec, size_t *count)
+{
+	if ((spec->flag.status == ON && spec->flag.token != '-')
+		|| (spec->flag.status == OFF))
+		ft_write_width(spec, count);
+	if (spec->data.token == 'p')
+		*count += ft_putstr_fd("0x", 1);
+	ft_write_prec(spec, count);
+	if ((spec->precision.value > 0)
+		|| ((spec->data.value.value > 0) || (spec->data.value.uvalue > 0)
+			|| (spec->data.value.pvalue > 0)))
+	{
+		if ((spec->data.base == 10) && (spec->data.token != 'u'))
+			*count += ft_putnbr_fd(spec->data.value.value, 1);
+		else if ((spec->data.base == 10) && (spec->data.token == 'u'))
+			*count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
+		else if ((spec->data.base == 16) && (spec->data.token != 'p'))
+			*count += ft_putx_fd(spec->data.value.uvalue, spec->data.token, 1);
+		else if ((spec->data.base == 16) && (spec->data.token == 'p'))
+			*count += ft_putlx_fd(spec->data.value.pvalue, 1);
+	}
+	if (spec->flag.status == ON && spec->flag.token == '-')
+		ft_write_width(spec, count);
+}
+
+static void	ft_write_prec(t_spec *spec, size_t *count)
+{
+	while (spec->data.length.digits < spec->precision.value)
+		{
+			*count += ft_putchar_fd(spec->precision.fill, 1);
+			spec->data.length.digits++;
+		}
+}
+
+static void	ft_write_width(t_spec *spec, size_t *count)
+{
+	while ((spec->width.value > spec->precision.value)
+		&& (spec->width.value > spec->data.length.digits))
+	{
+		*count += ft_putchar_fd(spec->width.fill, 1);
+		spec->width.value--;
+	}
+}
