@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/17 02:33:03 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/18 22:37:36 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char	*get_data_type(char *str, va_list *arg, t_spec *spec)
 		spec->data.value.svalue = ft_strdup(va_arg(*arg, char *));
 		if (!spec->data.value.svalue)
 			return (NULL);
+		if (spec->precision.status == OFF)
+			spec->precision.value = ft_strlen(spec->data.value.svalue);
 	}
 	else
 		str = try_others(str, arg, spec);
