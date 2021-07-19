@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/19 03:07:24 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/19 13:44:28 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,23 @@ static void	ft_write_prec(t_spec *spec, size_t *count)
 
 static void	ft_write_width(t_spec *spec, size_t *count)
 {
-	while ((spec->width.value > spec->precision.value)
-		&& (spec->width.value > spec->data.length.digits))
+	if (spec->data.type == PTR)
 	{
-		*count += ft_putchar_fd(spec->width.fill, 1);
-		spec->width.value--;
+		while ((spec->width.value > spec->precision.value + 2)
+			&& (spec->width.value > spec->data.length.digits))
+		{
+			*count += ft_putchar_fd(spec->width.fill, 1);
+			spec->width.value--;
+		}
 	}
+	else
+	{
+		while ((spec->width.value > spec->precision.value)
+			&& (spec->width.value > spec->data.length.digits))
+		{
+			*count += ft_putchar_fd(spec->width.fill, 1);
+			spec->width.value--;
+		}
+	}
+	
 }
