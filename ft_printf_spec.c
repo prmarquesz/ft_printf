@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/19 03:03:12 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/20 01:40:56 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	*get_width(char *str, va_list *arg, t_spec *spec)
 		spec->width.value = va_arg(*arg, unsigned int);
 		str++;
 	}
-	else
-		spec->width.value = 0;
 	return (str);
 }
 
@@ -65,32 +63,27 @@ char	*get_precision(char *str, va_list *arg, t_spec *spec)
 			str++;
 		}
 	}
-	else
-		spec->precision.value = 0;
 	return (str);
 }
 
 char	*get_data_type(char *str, va_list *arg, t_spec *spec)
 {
-	if (*str == '%')
+	if (*str == '%' || *str == 'c')
 	{
 		spec->data.token = *str;
 		spec->data.type = CHR;
-		spec->data.value.value = *str++;
-	}
-	else if (*str == 'c')
-	{
-		spec->data.token = *str++;
-		spec->data.type = CHR;
-		spec->data.value.value = va_arg(*arg, int);
+		if (*str == '%')
+			spec->data.value.value = *str++;
+		else
+			spec->data.value.value = va_arg(*arg, int);
 	}
 	else if (*str == 's')
 	{
 		spec->data.token = *str++;
 		spec->data.type = STRING;
-		spec->data.value.svalue = ft_strdup(va_arg(*arg, char *));
+		spec->data.value.svalue = va_arg(*arg, char *);
 		if (!spec->data.value.svalue)
-			return (NULL);
+			spec->data.value.svalue = "(null)";
 		if (spec->precision.status == OFF)
 			spec->precision.value = ft_strlen(spec->data.value.svalue);
 	}
