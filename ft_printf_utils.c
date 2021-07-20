@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/19 13:31:38 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/20 01:35:59 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 static unsigned int	intlen(t_spec *spec);
 static unsigned int	uintlen(t_spec *spec);
 static unsigned int	ptrlen(t_spec *spec);
+
+void		init_struct(t_spec *spec)
+{
+	spec->flag.status = OFF;
+	spec->flag.token = 0;
+	spec->width.value = 0;
+	spec->width.fill = 0;
+	spec->precision.status = OFF;
+	spec->precision.value = 0;
+	spec->precision.fill = 0;
+	spec->data.token = 0;
+	spec->data.type = 0;
+	spec->data.base = 0;
+	spec->data.length.len = 0;
+	spec->data.value.svalue = 0;
+	spec->data.value.value = 0;
+}
 
 void	ft_formatting(t_spec *spec)
 {
