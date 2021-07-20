@@ -32,20 +32,20 @@ RM = rm -f
 all:	$(NAME)
 
 $(NAME):    $(OBJS)
-	ar -rcs $@ $(OBJS)
+	@ar -rcs $@ $(OBJS)
 
 %.o:	%.c
-	$(CC) -g -c $(CFLAGS) $< -o $@
+	@$(CC) -g -c $(CFLAGS) $< -o $@
 
 bonus:	$(BONUS_OBJS)
-	ar -rcs $(NAME) $(BONUS_OBJS)
+	@ar -rcs $(NAME) $(BONUS_OBJS)
 
 clean:		
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean:	clean	
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
