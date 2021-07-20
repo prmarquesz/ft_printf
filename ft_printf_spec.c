@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/20 01:40:56 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/20 02:12:26 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ static char	*try_others(char *str, va_list *arg, t_spec *spec)
 	else if (*str == 'p')
 	{
 		spec->data.value.pvalue = va_arg(*arg, uintptr_t);
+		if ((void *)spec->data.value.pvalue == NULL)
+			spec->precision.value += 1;
 		spec->data.type = PTR;
 	}
 	else
