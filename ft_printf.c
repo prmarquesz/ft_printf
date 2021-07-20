@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:37:15 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/19 02:55:51 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/20 01:25:38 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ int	ft_printf(const char *str, ...)
 				break ;
 		}
 	}
-	if (spec.data.type == STRING)
-		free(spec.data.value.svalue);
 	va_end(arg);
 	return (count);
 }
 
 static char	*get_spec(char *str, va_list *arg, t_spec *spec, size_t *count)
 {
+	init_struct(spec);
 	str = get_flag(str, spec);
 	str = get_width(str, arg, spec);
 	str = get_precision(str, arg, spec);
