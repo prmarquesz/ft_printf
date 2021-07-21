@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/21 00:28:06 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/21 14:38:26 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static unsigned int	intlen(t_spec *spec);
 static unsigned int	uintlen(t_spec *spec);
 static unsigned int	ptrlen(t_spec *spec);
 
-void		init_struct(t_spec *spec)
+void	init_struct(t_spec *spec)
 {
 	spec->flag.status = OFF;
 	spec->flag.token = 0;
