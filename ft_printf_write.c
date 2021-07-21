@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/21 01:25:36 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/21 14:44:05 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_write_str(t_spec *spec, size_t *count)
 void	ft_write_int(t_spec *spec, size_t *count)
 {
 	if ((spec->flag.status == ON && spec->flag.token == '0'
-		&& spec->data.type != PTR) || (spec->flag.status == OFF))
+			&& spec->data.type != PTR) || (spec->flag.status == OFF))
 		ft_write_width(spec, count);
 	if (spec->data.token == 'p')
 		*count += ft_putstr_fd("0x", 1);
@@ -89,10 +89,10 @@ void	ft_write_int(t_spec *spec, size_t *count)
 static void	ft_write_prec(t_spec *spec, size_t *count)
 {
 	while (spec->data.length.digits < spec->precision.value)
-		{
-			*count += ft_putchar_fd(spec->precision.fill, 1);
-			spec->data.length.digits++;
-		}
+	{
+		*count += ft_putchar_fd(spec->precision.fill, 1);
+		spec->data.length.digits++;
+	}
 }
 
 static void	ft_write_width(t_spec *spec, size_t *count)
@@ -115,5 +115,4 @@ static void	ft_write_width(t_spec *spec, size_t *count)
 			spec->width.value--;
 		}
 	}
-	
 }
