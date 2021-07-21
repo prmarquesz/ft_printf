@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:37:15 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/20 01:25:38 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:04:05 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static char	*get_spec(char *str, va_list *arg, t_spec *spec, size_t *count)
 	str = get_width(str, arg, spec);
 	str = get_precision(str, arg, spec);
 	str = get_data_type(str, arg, spec);
-	if (!str)
-		return (str);
 	ft_formatting(spec);
 	if (spec->data.type == CHR)
 		ft_write_char(spec, count);
@@ -53,12 +51,12 @@ static char	*get_spec(char *str, va_list *arg, t_spec *spec, size_t *count)
 		ft_write_str(spec, count);
 	else if (spec->data.type == INTEG || spec->data.type == PTR)
 		ft_write_int(spec, count);
-	/*if (spec->data.type >= 0)
-		return (0);
-	else
+	else if (spec->data.type >= 0)
 	{
-		*str++;
-		return (1);
-	}*/
+		if (spec->width.value > 0)
+			spec->width.value += -1;
+		spec->precision.value = 0;
+		ft_write_int(spec, count);
+	}
 	return (str);
 }
