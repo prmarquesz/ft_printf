@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/20 02:12:26 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/21 01:59:49 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ char	*get_width(char *str, va_list *arg, t_spec *spec)
 	{
 		spec->width.value = va_arg(*arg, unsigned int);
 		str++;
+	}
+	if ((int)spec->width.value < 0)
+	{
+		spec->flag.status = ON;
+		spec->flag.token = '-';
+		spec->width.fill = ' ';
+		spec->width.value *= -1;
 	}
 	return (str);
 }
@@ -76,6 +83,7 @@ char	*get_data_type(char *str, va_list *arg, t_spec *spec)
 			spec->data.value.value = *str++;
 		else
 			spec->data.value.value = va_arg(*arg, int);
+		str++;
 	}
 	else if (*str == 's')
 	{
@@ -106,13 +114,14 @@ static char	*try_others(char *str, va_list *arg, t_spec *spec)
 	else if (*str == 'p')
 	{
 		spec->data.value.pvalue = va_arg(*arg, uintptr_t);
-		if ((void *)spec->data.value.pvalue == NULL)
-			spec->precision.value += 1;
 		spec->data.type = PTR;
 	}
 	else
 		spec->data.type = 1;
 	if (spec->data.type == INTEG || spec->data.type == PTR)
 		spec->data.token = *str++;
+	if ((spec->data.type == INTEG || spec->data.type == PTR)
+		&& (!spec->data.value.value) && (spec->precision.status == OFF))
+		spec->precision.value = 1;
 	return (str);
 }
