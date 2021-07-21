@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/19 13:44:28 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/21 01:25:36 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,16 @@ void	ft_write_str(t_spec *spec, size_t *count)
 
 void	ft_write_int(t_spec *spec, size_t *count)
 {
-	if ((spec->flag.status == ON && spec->flag.token != '-')
-		|| (spec->flag.status == OFF))
+	if ((spec->flag.status == ON && spec->flag.token == '0'
+		&& spec->data.type != PTR) || (spec->flag.status == OFF))
 		ft_write_width(spec, count);
 	if (spec->data.token == 'p')
 		*count += ft_putstr_fd("0x", 1);
+	if (spec->data.type == PTR && spec->flag.status == ON
+		&& spec->flag.token == '0')
+		ft_write_width(spec, count);
 	ft_write_prec(spec, count);
-	if ((spec->precision.value > 0)
-		|| ((spec->data.value.value > 0) || (spec->data.value.uvalue > 0)
-			|| (spec->data.value.pvalue > 0)))
+	if (spec->data.value.value)
 	{
 		if ((spec->data.base == 10) && (spec->data.token != 'u'))
 			*count += ft_putnbr_fd(spec->data.value.value, 1);
@@ -80,7 +81,8 @@ void	ft_write_int(t_spec *spec, size_t *count)
 		else if ((spec->data.base == 16) && (spec->data.token == 'p'))
 			*count += ft_putlx_fd(spec->data.value.pvalue, 1);
 	}
-	if (spec->flag.status == ON && spec->flag.token == '-')
+	if ((spec->flag.status == ON && spec->flag.token == '-')
+		|| (spec->data.type == PTR && spec->flag.token == '0'))
 		ft_write_width(spec, count);
 }
 
@@ -98,7 +100,7 @@ static void	ft_write_width(t_spec *spec, size_t *count)
 	if (spec->data.type == PTR)
 	{
 		while ((spec->width.value > spec->precision.value + 2)
-			&& (spec->width.value > spec->data.length.digits))
+			&& (spec->width.value > spec->data.length.digits + 2))
 		{
 			*count += ft_putchar_fd(spec->width.fill, 1);
 			spec->width.value--;
