@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 03:27:12 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 16:28:56 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,19 @@ void	ft_write_int(t_spec *spec)
 	ft_write_prec(spec);
 	if (spec->data.value.value)
 	{
-		if ((spec->data.base == 10) && (spec->data.token != 'u') && (spec->width.fill == ' '))
+		if ((spec->data.base == 10 && spec->data.token != 'u') && (spec->width.fill == ' ' && !spec->precision.value))
 			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
-		else if ((spec->data.base == 10) && (spec->data.token != 'u') && (spec->width.fill == '0'))
-			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
+		else if ((spec->data.base == 10 && spec->data.token != 'u') && (spec->width.fill == '0' || spec->precision.value))
+		{
+			if (spec->data.value.value > 0)
+				spec->count += ft_putnbr_fd(spec->data.value.value, 1);
+			else if (spec->data.value.value < 0)
+			{
+				spec->data.value.value *= -1;
+				spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
+			}
+		}
+		//	spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 10) && (spec->data.token == 'u'))
 			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 16) && (spec->data.token != 'p'))
@@ -91,6 +100,15 @@ void	ft_write_int(t_spec *spec)
 
 static void	ft_write_prec(t_spec *spec)
 {
+	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0))
+	{
+		while (spec->data.length.digits - 1 < spec->precision.value)
+		{
+			spec->count += ft_putchar_fd(spec->precision.fill, 1);
+			spec->data.length.digits++;
+		}
+		return ;
+	}
 	while (spec->data.length.digits < spec->precision.value)
 	{
 		spec->count += ft_putchar_fd(spec->precision.fill, 1);
