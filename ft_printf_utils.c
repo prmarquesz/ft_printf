@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 03:16:35 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 12:03:22 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	ft_formatting(t_spec *spec)
 	}
 	else if (spec->data.type == STRING)
 		spec->data.length.len = ft_strlen(spec->data.value.svalue);
-	else if ((spec->data.type == INTEG) && (spec->data.token != 'u'))
+	else if ((spec->data.type == INTEG) && (spec->data.token == 'd' || spec->data.token == 'i'))
 		spec->data.length.digits = intlen(spec);
-	else if ((spec->data.type == INTEG) && (spec->data.token == 'u'))
+	else if ((spec->data.type == INTEG) && (spec->data.token != 'd' && spec->data.token != 'i'))
 		spec->data.length.digits = uintlen(spec);
 	else if (spec->data.type == PTR)
 		spec->data.length.digits = ptrlen(spec);
