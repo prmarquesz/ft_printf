@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 19:03:07 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 20:36:31 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	ft_formatting(t_spec *spec)
 		spec->precision.value = 0;
 	}
 	else if (spec->data.type == STRING)
+	{
 		spec->data.length.len = ft_strlen(spec->data.value.svalue);
+		if ((int)spec->precision.value < 0)
+			spec->precision.value = spec->data.length.len;
+	}
 	else if ((spec->data.type == INTEG) && (spec->data.token == 'd' || spec->data.token == 'i'))
 		spec->data.length.digits = intlen(spec);
 	else if ((spec->data.type == INTEG) && (spec->data.token != 'd' && spec->data.token != 'i'))
@@ -60,6 +64,8 @@ void	ft_formatting(t_spec *spec)
 	if ((spec->data.type == INTEG || spec->data.type == PTR)
 		&& (!spec->data.value.value) && (spec->precision.status == OFF))
 		spec->precision.fill = '0';
+	if ((spec->data.type == CHR || spec->data.type == INTEG || spec->data.type == PTR) && ((int)spec->precision.value < 0))
+		spec->precision.value = spec->width.value;
 }
 
 static unsigned int	intlen(t_spec *spec)

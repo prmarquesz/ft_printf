@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 20:01:45 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 20:24:01 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ char	*get_precision(char *str, va_list *arg, t_spec *spec)
 			spec->precision.value = va_arg(*arg, unsigned int);
 			str++;
 		}
-		if ((int)spec->precision.value < 0)
-			spec->precision.value = 0;
 	}
 	return (str);
 }
