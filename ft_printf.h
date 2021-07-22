@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/20 01:25:28 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 01:36:23 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_data
 
 typedef struct s_spec
 {
+	size_t		count;
 	t_flag		flag;
 	t_width		width;
 	t_precision	precision;
@@ -80,8 +81,8 @@ char	*get_width(char *str, va_list *arg, t_spec *spec);
 char	*get_precision(char *str, va_list *arg, t_spec *spec);
 char	*get_data_type(char *str, va_list *arg, t_spec *spec);
 void	ft_formatting(t_spec *spec);
-void	ft_write_char(t_spec *spec, size_t *count);
-void	ft_write_str(t_spec *spec, size_t *count);
-void	ft_write_int(t_spec *spec, size_t *count);
+void	ft_write_char(t_spec *spec);
+void	ft_write_str(t_spec *spec);
+void	ft_write_int(t_spec *spec);
 
 #endif
