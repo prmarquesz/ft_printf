@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/21 01:59:49 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/21 22:56:03 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ char	*get_data_type(char *str, va_list *arg, t_spec *spec)
 		if (*str == '%')
 			spec->data.value.value = *str++;
 		else
+		{
 			spec->data.value.value = va_arg(*arg, int);
-		str++;
+			str++;
+		}
 	}
 	else if (*str == 's')
 	{
