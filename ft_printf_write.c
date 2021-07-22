@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 01:43:09 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 03:27:12 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,15 @@ void	ft_write_int(t_spec *spec)
 	ft_write_prec(spec);
 	if (spec->data.value.value)
 	{
-		if ((spec->data.base == 10) && (spec->data.token != 'u'))
+		if ((spec->data.base == 10) && (spec->data.token != 'u') && (spec->width.fill == ' '))
 			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
+		else if ((spec->data.base == 10) && (spec->data.token != 'u') && (spec->width.fill == '0'))
+			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 10) && (spec->data.token == 'u'))
 			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 16) && (spec->data.token != 'p'))
-			spec->count += ft_putx_fd(spec->data.value.uvalue, spec->data.token, 1);
+			spec->count += ft_putx_fd(spec->data.value.uvalue,
+					spec->data.token, 1);
 		else if ((spec->data.base == 16) && (spec->data.token == 'p'))
 			spec->count += ft_putlx_fd(spec->data.value.pvalue, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 01:39:50 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 03:16:35 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,11 @@ static unsigned int	intlen(t_spec *spec)
 	if (spec->data.value.value < 0)
 	{
 		digits++;
-		spec->count += ft_putchar_fd('-', 1);
-		spec->data.value.value *= -1;
+		if (spec->width.fill == '0')
+		{
+			spec->count += ft_putchar_fd('-', 1);
+			spec->data.value.value *= -1;
+		}
 	}
 	return (digits);
 }
