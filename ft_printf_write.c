@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 18:14:26 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:46:59 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ft_write_str(t_spec *spec)
 
 void	ft_write_int(t_spec *spec)
 {
+	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0 && spec->width.fill == '0'))
+			spec->count += ft_putchar_fd('-', 1);
 	if ((spec->flag.status == ON && spec->flag.token == '0'
 			&& spec->data.type != PTR) || (spec->flag.status == OFF))
 		ft_write_width(spec);
@@ -75,6 +77,8 @@ void	ft_write_int(t_spec *spec)
 	if (spec->data.type == PTR && spec->flag.status == ON
 		&& spec->flag.token == '0')
 		ft_write_width(spec);
+	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0 && spec->width.fill == ' ' && spec->precision.value))
+			spec->count += ft_putchar_fd('-', 1);
 	ft_write_prec(spec);
 	if (spec->data.value.value)
 	{
@@ -135,6 +139,16 @@ static void	ft_write_width(t_spec *spec)
 	}
 	else
 	{
+		if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0))
+		{
+			while ((spec->width.value > spec->precision.value + 1)
+				&& (spec->width.value > spec->data.length.digits))
+			{
+				spec->count += ft_putchar_fd(spec->width.fill, 1);
+				spec->width.value--;
+			}
+			return ;
+		}
 		while ((spec->width.value > spec->precision.value)
 			&& (spec->width.value > spec->data.length.digits))
 		{
