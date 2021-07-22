@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 16:28:56 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 18:14:26 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	ft_write_str(t_spec *spec)
 {
 	if (spec->flag.status == ON && spec->flag.token == '-')
 	{
-		if ((spec->precision.value >= spec->data.length.len)
-			|| (spec->precision.status == OFF))
+		if ((spec->precision.value >= spec->data.length.len) || (spec->precision.status == OFF))
+		{
 			spec->count += ft_putstr_fd(spec->data.value.svalue, 1);
+			spec->precision.value = spec->data.length.len;
+		}
 		else
 		{
 			write(1, spec->data.value.svalue, spec->precision.value);
@@ -47,15 +49,19 @@ void	ft_write_str(t_spec *spec)
 			spec->count += ft_putchar_fd(spec->width.fill, 1);
 		return ;
 	}
-	while (spec->width.value-- > spec->precision.value)
-		spec->count += ft_putchar_fd(spec->width.fill, 1);
-	if ((spec->precision.value >= spec->data.length.len)
-		|| (spec->precision.status == OFF))
+	if ((spec->precision.value >= spec->data.length.len) || (spec->precision.status == OFF))
+	{
+		while (spec->width.value-- > spec->data.length.len)
+			spec->count += ft_putchar_fd(spec->width.fill, 1);
 		spec->count += ft_putstr_fd(spec->data.value.svalue, 1);
+	}
 	else
 	{
+		while (spec->width.value-- > spec->precision.value)
+			spec->count += ft_putchar_fd(spec->width.fill, 1);
 		write(1, spec->data.value.svalue, spec->precision.value);
 		spec->count += spec->precision.value;
+		
 	}
 }
 
