@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 03:00:16 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/06 13:50:33 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/22 21:19:35 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*lxtoc(char *nbr, uintptr_t n, int digits);
 
 int	ft_putlx_fd(uintptr_t n, int fd)
 {
-	char	nbr[13];
+	char	nbr[17];
 
 	if (n == 0 || (n > 0 && n <= 9))
 		return (ft_putchar_fd(n + '0', fd));
