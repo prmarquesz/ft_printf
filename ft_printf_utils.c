@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 20:36:31 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 02:04:59 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	ft_formatting(t_spec *spec)
 	if ((spec->data.type == INTEG || spec->data.type == PTR)
 		&& (!spec->data.value.value) && (spec->precision.status == OFF))
 		spec->precision.fill = '0';
-	if ((spec->data.type == CHR || spec->data.type == INTEG || spec->data.type == PTR) && ((int)spec->precision.value < 0))
-		spec->precision.value = spec->width.value;
 }
 
 static unsigned int	intlen(t_spec *spec)
@@ -82,6 +80,12 @@ static unsigned int	intlen(t_spec *spec)
 	}
 	if (spec->data.value.value < 0)
 		digits++;
+	if ((int)spec->precision.value < 0)
+	{
+		spec->precision.value = 0;
+		spec->precision.status = OFF;
+	}
+		
 	return (digits);
 }
 
@@ -96,6 +100,11 @@ static unsigned int	uintlen(t_spec *spec)
 	{
 		n /= spec->data.base;
 		digits++;
+	}
+	if ((int)spec->precision.value < 0)
+	{
+		spec->precision.value = 0;
+		spec->precision.status = OFF;
 	}
 	return (digits);
 }
@@ -112,5 +121,7 @@ static unsigned int	ptrlen(t_spec *spec)
 		n /= spec->data.base;
 		digits++;
 	}
+	if ((int)spec->precision.value < 0)
+		spec->precision.value = 0;
 	return (digits);
 }
