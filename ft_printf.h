@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 01:36:23 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 17:05:19 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define CHR	-1
 # define STRING	-2
 # define INTEG	-3
-# define PTR	-4
+# define UINTEG	-4
+# define PTR	-5
 
 typedef struct s_flag
 {
