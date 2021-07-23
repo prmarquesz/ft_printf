@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:37:15 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 16:14:13 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:23:42 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ static char	*get_spec(char *str, va_list *arg, t_spec *spec)
 	ft_formatting(spec);
 	if (spec->data.type == CHR || spec->data.type == STRING)
 		ft_write_char(spec);
-	else if (spec->data.type == INTEG || spec->data.type == PTR)
+	else if (spec->data.type == INTEG)
 		ft_write_int(spec);
+	else if (spec->data.type == UINTEG)
+		ft_write_uint(spec);
+	else if (spec->data.type == PTR)
+		ft_write_ptr(spec);
 	else if (spec->data.type >= 0)
 	{
 		if (spec->width.value > 0)
