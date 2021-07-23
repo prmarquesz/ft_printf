@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 19:46:59 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 02:37:56 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_write_int(t_spec *spec)
 	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0 && spec->width.fill == ' ' && spec->precision.value))
 			spec->count += ft_putchar_fd('-', 1);
 	ft_write_prec(spec);
-	if (spec->data.value.value)
+	if (spec->data.value.value || spec->data.value.pvalue)
 	{
 		if ((spec->data.base == 10 && spec->data.token != 'u') && (spec->width.fill == ' ' && !spec->precision.value))
 			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
