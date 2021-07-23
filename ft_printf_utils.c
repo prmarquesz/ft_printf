@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 14:36:10 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 17:40:55 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ void	ft_formatting(t_spec *spec)
 		if ((int)spec->precision.value < 0)
 			spec->precision.value = spec->data.length.len;
 	}
-	else if ((spec->data.type == INTEG)
-		&& (spec->data.token == 'd' || spec->data.token == 'i'))
+	else if (spec->data.type == INTEG)
 		format_int(spec);
-	else if ((spec->data.type == INTEG)
-		&& (spec->data.token != 'd' && spec->data.token != 'i'))
+	else if (spec->data.type == UINTEG)
 		format_uint(spec);
 	else if (spec->data.type == PTR)
 		format_ptr(spec);
@@ -58,7 +56,7 @@ void	ft_formatting(t_spec *spec)
 
 static void	format_int(t_spec *spec)
 {
-	int				n;
+	int	n;
 
 	n = spec->data.value.value;
 	spec->data.length.digits = 0;
@@ -112,7 +110,7 @@ static void	format_uint(t_spec *spec)
 
 static void	format_ptr(t_spec *spec)
 {
-	uintptr_t		n;
+	uintptr_t	n;
 
 	n = spec->data.value.pvalue;
 	spec->data.length.digits = 0;
