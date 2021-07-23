@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:09:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 02:37:56 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 16:06:23 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,60 +15,11 @@
 static void	ft_write_prec(t_spec *spec);
 static void	ft_write_width(t_spec *spec);
 
-void	ft_write_char(t_spec *spec)
-{
-	if (spec->flag.status == ON && spec->flag.token == '-')
-	{
-		spec->count += ft_putchar_fd(spec->data.value.value, 1);
-		while (spec->width.value-- > spec->data.length.len)
-			spec->count += ft_putchar_fd(spec->width.fill, 1);
-	}
-	else
-	{
-		while (spec->width.value-- > spec->data.length.len)
-			spec->count += ft_putchar_fd(spec->width.fill, 1);
-		spec->count += ft_putchar_fd(spec->data.value.value, 1);
-	}
-}
-
-void	ft_write_str(t_spec *spec)
-{
-	if (spec->flag.status == ON && spec->flag.token == '-')
-	{
-		if ((spec->precision.value >= spec->data.length.len) || (spec->precision.status == OFF))
-		{
-			spec->count += ft_putstr_fd(spec->data.value.svalue, 1);
-			spec->precision.value = spec->data.length.len;
-		}
-		else
-		{
-			write(1, spec->data.value.svalue, spec->precision.value);
-			spec->count += spec->precision.value;
-		}
-		while (spec->width.value-- > spec->precision.value)
-			spec->count += ft_putchar_fd(spec->width.fill, 1);
-		return ;
-	}
-	if ((spec->precision.value >= spec->data.length.len) || (spec->precision.status == OFF))
-	{
-		while (spec->width.value-- > spec->data.length.len)
-			spec->count += ft_putchar_fd(spec->width.fill, 1);
-		spec->count += ft_putstr_fd(spec->data.value.svalue, 1);
-	}
-	else
-	{
-		while (spec->width.value-- > spec->precision.value)
-			spec->count += ft_putchar_fd(spec->width.fill, 1);
-		write(1, spec->data.value.svalue, spec->precision.value);
-		spec->count += spec->precision.value;
-		
-	}
-}
-
 void	ft_write_int(t_spec *spec)
 {
-	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0 && spec->width.fill == '0'))
-			spec->count += ft_putchar_fd('-', 1);
+	if ((spec->data.token == 'd' || spec->data.token == 'i')
+		&& (spec->data.value.value < 0 && spec->width.fill == '0'))
+		spec->count += ft_putchar_fd('-', 1);
 	if ((spec->flag.status == ON && spec->flag.token == '0'
 			&& spec->data.type != PTR) || (spec->flag.status == OFF))
 		ft_write_width(spec);
@@ -77,14 +28,18 @@ void	ft_write_int(t_spec *spec)
 	if (spec->data.type == PTR && spec->flag.status == ON
 		&& spec->flag.token == '0')
 		ft_write_width(spec);
-	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0 && spec->width.fill == ' ' && spec->precision.value))
-			spec->count += ft_putchar_fd('-', 1);
+	if ((spec->data.token == 'd' || spec->data.token == 'i')
+		&& (spec->data.value.value < 0 && spec->width.fill == ' '
+			&& spec->precision.value))
+		spec->count += ft_putchar_fd('-', 1);
 	ft_write_prec(spec);
 	if (spec->data.value.value || spec->data.value.pvalue)
 	{
-		if ((spec->data.base == 10 && spec->data.token != 'u') && (spec->width.fill == ' ' && !spec->precision.value))
+		if ((spec->data.base == 10 && spec->data.token != 'u')
+			&& (spec->width.fill == ' ' && !spec->precision.value))
 			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
-		else if ((spec->data.base == 10 && spec->data.token != 'u') && (spec->width.fill == '0' || spec->precision.value))
+		else if ((spec->data.base == 10 && spec->data.token != 'u')
+			&& (spec->width.fill == '0' || spec->precision.value))
 		{
 			if (spec->data.value.value > 0)
 				spec->count += ft_putnbr_fd(spec->data.value.value, 1);
@@ -94,7 +49,6 @@ void	ft_write_int(t_spec *spec)
 				spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 			}
 		}
-		//	spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 10) && (spec->data.token == 'u'))
 			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else if ((spec->data.base == 16) && (spec->data.token != 'p'))
@@ -110,7 +64,8 @@ void	ft_write_int(t_spec *spec)
 
 static void	ft_write_prec(t_spec *spec)
 {
-	if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0))
+	if ((spec->data.token == 'd' || spec->data.token == 'i')
+		&& (spec->data.value.value < 0))
 	{
 		while (spec->data.length.digits - 1 < spec->precision.value)
 		{
@@ -139,7 +94,8 @@ static void	ft_write_width(t_spec *spec)
 	}
 	else
 	{
-		if ((spec->data.token == 'd' || spec->data.token == 'i') && (spec->data.value.value < 0))
+		if ((spec->data.token == 'd' || spec->data.token == 'i')
+			&& (spec->data.value.value < 0))
 		{
 			while ((spec->width.value > spec->precision.value + 1)
 				&& (spec->width.value > spec->data.length.digits))

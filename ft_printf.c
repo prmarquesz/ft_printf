@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:37:15 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/22 01:38:32 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 16:14:13 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ static char	*get_spec(char *str, va_list *arg, t_spec *spec)
 	str = get_precision(str, arg, spec);
 	str = get_data_type(str, arg, spec);
 	ft_formatting(spec);
-	if (spec->data.type == CHR)
+	if (spec->data.type == CHR || spec->data.type == STRING)
 		ft_write_char(spec);
-	else if (spec->data.type == STRING)
-		ft_write_str(spec);
 	else if (spec->data.type == INTEG || spec->data.type == PTR)
 		ft_write_int(spec);
 	else if (spec->data.type >= 0)

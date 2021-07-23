@@ -6,15 +6,15 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 02:04:59 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 14:36:10 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static unsigned int	intlen(t_spec *spec);
-static unsigned int	uintlen(t_spec *spec);
-static unsigned int	ptrlen(t_spec *spec);
+static void	format_int(t_spec *spec);
+static void	format_uint(t_spec *spec);
+static void	format_ptr(t_spec *spec);
 
 void	init_struct(t_spec *spec)
 {
@@ -46,82 +46,89 @@ void	ft_formatting(t_spec *spec)
 		if ((int)spec->precision.value < 0)
 			spec->precision.value = spec->data.length.len;
 	}
-	else if ((spec->data.type == INTEG) && (spec->data.token == 'd' || spec->data.token == 'i'))
-		spec->data.length.digits = intlen(spec);
-	else if ((spec->data.type == INTEG) && (spec->data.token != 'd' && spec->data.token != 'i'))
-		spec->data.length.digits = uintlen(spec);
+	else if ((spec->data.type == INTEG)
+		&& (spec->data.token == 'd' || spec->data.token == 'i'))
+		format_int(spec);
+	else if ((spec->data.type == INTEG)
+		&& (spec->data.token != 'd' && spec->data.token != 'i'))
+		format_uint(spec);
 	else if (spec->data.type == PTR)
-		spec->data.length.digits = ptrlen(spec);
-	if (spec->data.type == INTEG || spec->data.type == PTR)
-	{
-		if (spec->flag.status == ON && spec->flag.token == '0'
-			&& spec->precision.status == ON)
-		{
-			spec->flag.status = OFF;
-			spec->width.fill = ' ';
-		}
-	}
-	if ((spec->data.type == INTEG || spec->data.type == PTR)
-		&& (!spec->data.value.value) && (spec->precision.status == OFF))
-		spec->precision.fill = '0';
+		format_ptr(spec);
 }
 
-static unsigned int	intlen(t_spec *spec)
+static void	format_int(t_spec *spec)
 {
-	unsigned int	digits;
 	int				n;
 
 	n = spec->data.value.value;
-	digits = 0;
+	spec->data.length.digits = 0;
 	while (n)
 	{
 		n /= (int)spec->data.base;
-		digits++;
+		spec->data.length.digits++;
 	}
 	if (spec->data.value.value < 0)
-		digits++;
+		spec->data.length.digits++;
 	if ((int)spec->precision.value < 0)
 	{
 		spec->precision.value = 0;
 		spec->precision.status = OFF;
 	}
-		
-	return (digits);
+	if (spec->flag.status == ON && spec->flag.token == '0'
+		&& spec->precision.status == ON)
+	{
+		spec->flag.status = OFF;
+		spec->width.fill = ' ';
+	}
+	if ((!spec->data.value.value) && (spec->precision.status == OFF))
+		spec->precision.fill = '0';
 }
 
-static unsigned int	uintlen(t_spec *spec)
+static void	format_uint(t_spec *spec)
 {
-	unsigned int	digits;
 	unsigned int	n;
 
 	n = spec->data.value.uvalue;
-	digits = 0;
+	spec->data.length.digits = 0;
 	while (n)
 	{
 		n /= spec->data.base;
-		digits++;
+		spec->data.length.digits++;
 	}
 	if ((int)spec->precision.value < 0)
 	{
 		spec->precision.value = 0;
 		spec->precision.status = OFF;
 	}
-	return (digits);
+	if (spec->flag.status == ON && spec->flag.token == '0'
+		&& spec->precision.status == ON)
+	{
+		spec->flag.status = OFF;
+		spec->width.fill = ' ';
+	}
+	if ((!spec->data.value.value) && (spec->precision.status == OFF))
+		spec->precision.fill = '0';
 }
 
-static unsigned int	ptrlen(t_spec *spec)
+static void	format_ptr(t_spec *spec)
 {
-	unsigned int	digits;
 	uintptr_t		n;
 
 	n = spec->data.value.pvalue;
-	digits = 0;
+	spec->data.length.digits = 0;
 	while (n)
 	{
 		n /= spec->data.base;
-		digits++;
+		spec->data.length.digits++;
 	}
 	if ((int)spec->precision.value < 0)
 		spec->precision.value = 0;
-	return (digits);
+	if (spec->flag.status == ON && spec->flag.token == '0'
+		&& spec->precision.status == ON)
+	{
+		spec->flag.status = OFF;
+		spec->width.fill = ' ';
+	}
+	if ((!spec->data.value.value) && (spec->precision.status == OFF))
+		spec->precision.fill = '0';
 }
