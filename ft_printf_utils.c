@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:46:06 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 17:40:55 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 15:13:25 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	format_int(t_spec *spec)
 		spec->data.length.digits++;
 	if ((int)spec->precision.value < 0)
 	{
-		spec->precision.value = 0;
+		spec->precision.value = 1;
 		spec->precision.status = OFF;
 	}
 	if (spec->flag.status == ON && spec->flag.token == '0'
@@ -95,7 +95,7 @@ static void	format_uint(t_spec *spec)
 	}
 	if ((int)spec->precision.value < 0)
 	{
-		spec->precision.value = 0;
+		spec->precision.value = 1;
 		spec->precision.status = OFF;
 	}
 	if (spec->flag.status == ON && spec->flag.token == '0'
