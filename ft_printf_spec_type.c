@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 17:06:34 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 17:36:29 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:47:42 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ char	*get_data_type(char *str, va_list *arg, t_spec *spec)
 		str = get_uint(str, arg, spec);
 	else if (*str == 'p')
 		str = get_ptr(str, arg, spec);
+	else
+		spec->data.type = 1;
 	if (spec->data.type == INTEG || spec->data.type == UINTEG
 		|| spec->data.type == PTR)
 	{
 		if ((!spec->data.value.value) && (spec->precision.status == OFF))
 			spec->precision.value = 1;
-	}
-	else
-		spec->data.type = 1;
+	}	
 	return (str);
 }
 
@@ -91,6 +91,6 @@ static char	*get_ptr(char *str, va_list *arg, t_spec *spec)
 	spec->data.token = *str++;
 	spec->data.type = PTR;
 	spec->data.base = 16;
-	spec->data.value.pvalue = va_arg(*arg, unsigned int);
+	spec->data.value.pvalue = va_arg(*arg, uintptr_t);
 	return (str);
 }
