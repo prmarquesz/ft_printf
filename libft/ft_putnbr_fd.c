@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 07:08:39 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/06 13:53:27 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 03:56:18 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_putnbr_fd(int n, int fd)
 {
 	char	nbr[13];
 
+	nbr[0] = '\0';
 	if (n == 0 || (n >= 0 && n <= 9))
 		return (ft_putchar_fd(n + '0', fd));
 	else
