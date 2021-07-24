@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 17:44:12 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 20:32:09 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 23:30:55 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_write_int(t_spec *spec)
 	if ((spec->flag.token == '0') || (spec->flag.status == OFF))
 		write_width(spec);
 	if ((spec->data.value.value < 0) && (spec->width.fill == ' ')
-			&& (spec->precision.value))
+		&& (spec->precision.value))
 		spec->count += ft_putchar_fd('-', 1);
 	write_prec(spec);
 	if (spec->data.value.value)
@@ -49,7 +49,7 @@ static void	write_width(t_spec *spec)
 	if (spec->data.value.value < 0)
 	{
 		while ((spec->width.value > spec->precision.value + 1)
-				&& (spec->width.value > spec->data.length.digits))
+			&& (spec->width.value > spec->data.length.digits))
 		{
 			spec->count += ft_putchar_fd(spec->width.fill, 1);
 			spec->width.value--;

@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 15:22:01 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 16:06:04 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/23 23:28:30 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	write_width(t_spec *spec)
 static void	write_prec(t_spec *spec)
 {
 	if ((spec->precision.value >= spec->data.length.len)
-			|| (spec->precision.status == OFF))
+		|| (spec->precision.status == OFF))
 	{
 		spec->count += ft_putstr_fd(spec->data.value.svalue, 1);
 		spec->precision.value = spec->data.length.len;
