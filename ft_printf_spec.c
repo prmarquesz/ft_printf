@@ -6,27 +6,28 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 16:27:57 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 17:39:36 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 02:30:18 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*get_flag(char *str, t_spec *spec)
+char	*get_flag(char *s, t_spec *spec)
 {
-	while ((*str == '0' || *str == '-'))
+	while (*s == ' ' || *s == '0' || *s == '-' || *s == '+' || *s == '#')
 	{
-		if (spec->flag.status == OFF || spec->flag.token == '0')
-			spec->flag.token = *str++;
+		if (spec->flag.status == OFF || spec->flag.token == '0'
+			|| spec->flag.token == ' ')
+			spec->flag.token = *s++;
 		else
-			str++;
+			s++;
 		spec->flag.status = ON;
 	}
 	if (spec->flag.token == '0')
 		spec->width.fill = '0';
 	else
 		spec->width.fill = ' ';
-	return (str);
+	return (s);
 }
 
 char	*get_width(char *str, va_list *arg, t_spec *spec)

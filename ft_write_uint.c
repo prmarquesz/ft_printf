@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 20:16:47 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 23:32:41 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 01:54:38 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ void	ft_write_uint(t_spec *spec)
 		if (spec->data.token == 'u')
 			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
 		else
+		{
+			if (spec->flag.token == '#')
+			{
+				spec->count += ft_putchar_fd('0', 1);
+				spec->count += ft_putchar_fd(spec->data.token, 1);
+			}
 			spec->count += ft_putx_fd(spec->data.value.uvalue,
 					spec->data.token, 1);
+		}
 	}
 	if (spec->flag.status == ON && spec->flag.token == '-')
 		write_width(spec);

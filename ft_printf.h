@@ -6,7 +6,7 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:41:03 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 20:25:30 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 00:55:55 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_spec
 
 int		ft_printf(const char *str, ...);
 void	init_struct(t_spec *spec);
-char	*get_flag(char *str, t_spec *spec);
+char	*get_flag(char *s, t_spec *spec);
 char	*get_width(char *str, va_list *arg, t_spec *spec);
 char	*get_precision(char *str, va_list *arg, t_spec *spec);
 char	*get_data_type(char *str, va_list *arg, t_spec *spec);

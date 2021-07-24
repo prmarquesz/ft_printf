@@ -6,12 +6,13 @@
 /*   By: proberto <proberto@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 17:44:12 by proberto          #+#    #+#             */
-/*   Updated: 2021/07/23 23:30:55 by proberto         ###   ########.fr       */
+/*   Updated: 2021/07/24 02:49:46 by proberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static void	write_num(t_spec *spec);
 static void	write_width(t_spec *spec);
 static void	write_prec(t_spec *spec);
 
@@ -24,24 +25,31 @@ void	ft_write_int(t_spec *spec)
 	if ((spec->data.value.value < 0) && (spec->width.fill == ' ')
 		&& (spec->precision.value))
 		spec->count += ft_putchar_fd('-', 1);
+	if (spec->data.value.value >= 0 && spec->flag.token == '+')
+		spec->count += ft_putchar_fd('+', 1);
+	if (spec->data.value.value >= 0 && spec->flag.token == ' ')
+		spec->count += ft_putchar_fd(' ', 1);
 	write_prec(spec);
 	if (spec->data.value.value)
-	{
-		if ((spec->width.fill == ' ') && (!spec->precision.value))
-			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
-		else if ((spec->width.fill == '0') || (spec->precision.value))
-		{
-			if (spec->data.value.value > 0)
-				spec->count += ft_putnbr_fd(spec->data.value.value, 1);
-			else if (spec->data.value.value < 0)
-			{
-				spec->data.value.value *= -1;
-				spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
-			}
-		}
-	}
+		write_num(spec);
 	if (spec->flag.status == ON && spec->flag.token == '-')
 		write_width(spec);
+}
+
+static void	write_num(t_spec *spec)
+{
+	if ((spec->width.fill == ' ') && (!spec->precision.value))
+		spec->count += ft_putnbr_fd(spec->data.value.value, 1);
+	else if ((spec->width.fill == '0') || (spec->precision.value))
+	{
+		if (spec->data.value.value > 0)
+			spec->count += ft_putnbr_fd(spec->data.value.value, 1);
+		else if (spec->data.value.value < 0)
+		{
+			spec->data.value.value *= -1;
+			spec->count += ft_putpnbr_fd(spec->data.value.uvalue, 1);
+		}
+	}
 }
 
 static void	write_width(t_spec *spec)
